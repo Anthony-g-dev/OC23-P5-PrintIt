@@ -21,6 +21,8 @@ let currentSlideIndex = 0
 const carrouselLeftArrowElement = document.querySelector(".arrow_left");
 const carrouselRightArrowElement = document.querySelector(".arrow_right");
 const dotsContainerElement = document.querySelector(".dots");
+const carrouselInfoElements = document.querySelector(".banner-info");
+const carrouselImageElements = document.querySelector(".banner-img");
 
 
 // FUNCTIONS
@@ -33,7 +35,8 @@ createHTMLElementFromString = (pString) => {
 updateSlide = (pIndex) => {
 	currentSlideIndex = pIndex;
 	updateDots();
-	// Modify info here
+	carrouselInfoElements.innerHTML = slides[currentSlideIndex].tagLine;
+	carrouselImageElements.src = `./assets/images/slideshow/${slides[currentSlideIndex].image}`;
 }
 
 changeSlide = (pNumber) => {
