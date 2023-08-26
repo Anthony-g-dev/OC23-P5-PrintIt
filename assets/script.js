@@ -1,3 +1,4 @@
+// VARIABLES
 const slides = [
 	{
 		"image":"slide1.jpg",
@@ -16,3 +17,56 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
+let currentSlideIndex = 0
+const carrouselLeftArrowElement = document.querySelector(".arrow_left");
+const carrouselRightArrowElement = document.querySelector(".arrow_right");
+const dotsContainerElement = document.querySelector(".dots");
+
+
+// FUNCTIONS
+createHTMLElementFromString = (pString) => {
+	let tempDiv = document.createElement("div");
+	tempDiv.innerHTML = pString.trim();
+	return tempDiv.firstChild;
+}
+
+updateSlide = (pIndex) => {
+	currentSlideIndex = pIndex;
+	updateDots();
+	// Modify info here
+}
+
+changeSlide = (pNumber) => {
+	if (currentSlideIndex + pNumber < 0) {updateSlide(slides.length - 1); return}
+	if (currentSlideIndex + pNumber >= slides.length) {updateSlide(0); return}
+	updateSlide(currentSlideIndex + pNumber);
+}
+
+updateDots = () => {
+	let dotsList = document.querySelectorAll(".dot");
+	dotsList.forEach((dot, index) => {
+		dot.classList.remove("dot_selected");
+	});
+	dotsList[currentSlideIndex].classList.add("dot_selected");
+}
+
+
+// EVENTS
+carrouselLeftArrowElement.addEventListener("click", (e) => {
+	changeSlide(-1);
+});
+
+carrouselRightArrowElement.addEventListener("click", (e) => {
+	changeSlide(1);
+});
+
+
+// DOTS
+const bulletHTMLElement = `<span class="dot"></span>`;
+for (let i = 0; i < slides.length; i++) {
+	dotsContainerElement.appendChild(createHTMLElementFromString(bulletHTMLElement));
+}
+
+
+// INIT
+updateSlide(0);
